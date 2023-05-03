@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('users', App\Http\Controllers\Api\UserController::class);
+Route::apiResource('messages', App\Http\Controllers\Api\MessageController::class);
+Route::apiResource('conversations', App\Http\Controllers\Api\ConversationController::class);
+Route::apiResource('conversation', [App\Http\Controllers\Api\ConversationController::class, 'currentConversation']);

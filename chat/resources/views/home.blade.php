@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-  <app currentUser="Auth::user()"></app>
+  <app auth="{{Auth::user()}}"></app>
 </div>
 @endsection
