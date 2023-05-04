@@ -20,6 +20,15 @@ export default {
         });
     },
   },
+  watch: {
+    userSelected: {
+      handler(newUser, oldUser) {
+        if (newUser != oldUser) {
+          this.getMessages();
+        }
+      },
+    },
+  },
   mounted() {
     this.getMessages();
   },
@@ -29,7 +38,10 @@ export default {
 <template>
   <div>
     <p v-for="message in messages" :key="message.id">{{ message.message }}</p>
-    <chat-box :currentAuthUser="currentAuthUser" :userSelected="userSelected"></chat-box>
+    <send-message
+      :currentAuthUser="currentAuthUser"
+      :userSelected="userSelected"
+    ></send-message>
   </div>
 </template>
 

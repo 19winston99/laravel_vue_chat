@@ -45,8 +45,4 @@ class User extends Authenticatable
     public function messages() {
         return $this->hasMany('App\Models\Message', 'id');
     }
-
-    public function conversations() {
-        return $this->belongsToMany('App\Models\Conversation', 'id');
-    }
 }

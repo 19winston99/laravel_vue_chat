@@ -13,9 +13,18 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Message::all();
+        $current_user_id = $request->currentUser;
+        $current_user_id_to_conversate = $request->selectedUser;
+        $messages = Message::where(function ($query) use ($current_user_id, $current_user_id_to_conversate) {
+            $query->where('sender_id', $current_user_id)
+                ->where('recipient_id', $current_user_id_to_conversate);
+        })->orWhere(function ($query) use ($current_user_id, $current_user_id_to_conversate) {
+            $query->where('sender_id', $current_user_id_to_conversate)
+                ->where('recipient_id', $current_user_id);
+        })->get();
+        return $messages;
     }
 
     /**
@@ -27,13 +36,11 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'conversation_id' => 'required',
             'sender_id' => 'required',
             'recipient_id' => 'required',
         ]);
 
         $message = Message::create([
-            'conversation_id' => 1,
             'sender_id' => $request->sender_id,
             'recipient_id' => $request->recipient_id,
             'message' => $request->message,
