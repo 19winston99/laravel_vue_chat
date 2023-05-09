@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div>
   <app auth="{{Auth::user()}}"></app>
 </div>
 @endsection

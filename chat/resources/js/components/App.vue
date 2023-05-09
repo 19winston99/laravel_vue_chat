@@ -1,7 +1,5 @@
 <script>
-import UsersConversations from './UsersConversations.vue';
 export default {
-  components: { UsersConversations },
   props: ["auth"],
   data() {
     return {
@@ -18,9 +16,11 @@ export default {
       });
     },
     getConversations() {
-      axios.get("api/conversations?currentUser=" + this.userObject.id).then((response) => {
-        this.conversations = response.data;
-      });
+      axios
+        .get("api/conversations?currentUser=" + this.userObject.id)
+        .then((response) => {
+          this.conversations = response.data;
+        });
     },
     setUserChat(user) {
       this.currentUserSelected = user;
@@ -34,11 +34,13 @@ export default {
 </script>
 
 <template>
-  <users-list :users="users" @userSelected="setUserChat"></users-list>
-  <chat
-    v-if="currentUserSelected"
-    :currentAuthUser="userObject"
-    :userSelected="currentUserSelected"
-  ></chat>
-  <users-conversations :conversations="conversations"></users-conversations>
+  <div class="d-flex">
+    <users-conversations :conversations="conversations" @userSelected="setUserChat"></users-conversations>
+    <chat
+      v-if="currentUserSelected"
+      :currentAuthUser="userObject"
+      :userSelected="currentUserSelected"
+    ></chat>
+    <users-list :users="users" @userSelected="setUserChat"></users-list>
+  </div>
 </template>

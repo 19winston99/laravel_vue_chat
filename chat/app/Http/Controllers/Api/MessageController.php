@@ -40,14 +40,21 @@ class MessageController extends Controller
             'recipient_id' => 'required',
         ]);
 
+        if ($request->image) {
+            $name = uniqid() . '.' . $request->image->extension();
+            $request->image->move(public_path('images/messages'), $name);
+        } else {
+            $name = null;
+        }
+
         $message = Message::create([
             'sender_id' => $request->sender_id,
             'recipient_id' => $request->recipient_id,
             'message' => $request->message,
-            'image' => $request->image
+            'image' => $name
         ]);
 
-        return ['success' => 'Messaggio inviato con successo', 'id' => $message->id];
+        return ['success' => 'Messaggio inviato con successo', 'id' => $message->id, 'image' => $name];
     }
 
     /**

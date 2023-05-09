@@ -1,0 +1,41 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+body {
+    color: white;
+    background-color: #252525;
+}
+
+nav {
+    background-color: #252525;
+}
+
+.navbar-profile-image {
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    object-fit: cover;
+    border: 2px solid;
+    animation: changeBorder 5s infinite alternate linear;
+}
+
+@keyframes changeBorder {
+    0% {
+        border-color: #00FF00;
+    }
+
+    25% {
+        border-color: #228b22;
+    }
+
+    50% {
+        border-color: #66FF00;
+    }
+
+    75% {
+        border-color: #ADFF2F;
+    }
+
+    100% {
+        border-color: #00CC99;
+    }
+}
