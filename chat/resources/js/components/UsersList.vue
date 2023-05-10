@@ -12,13 +12,13 @@ export default {
 
 <template>
   <div class="main-list-container">
-    <h5 class="text-center">Lista Utenti</h5>
-    <hr />
+    <div class="title-container">
+      <h5 class="text-center mb-0">Contatti</h5>
+    </div>
+    <!-- <hr /> -->
     <div class="users-lists-container">
       <div v-for="user in users" :key="user.id" @click="selectUser(user)">
-        <div
-          class="d-flex justify-content-center align-items-center gap-1 user-container"
-        >
+        <div class="d-flex ps-5 mb-1 align-items-center gap-1 user-container">
           <img
             :src="'images/users/' + user.image"
             class="img-fluid profile-image"
@@ -46,6 +46,8 @@ export default {
 
 .user-container {
   padding: 0.5em;
+  border: 1px solid #312e2e;
+  border-radius: 50px;
 }
 
 .user-container:hover {
@@ -64,13 +66,21 @@ export default {
 }
 
 .users-lists-container::-webkit-scrollbar-track {
-  background: #ccc;
+  background: #252525;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
 
 .users-lists-container::-webkit-scrollbar-thumb {
-  background: #252525;
+  background: #ccc;
   border-radius: 10px;
+}
+
+.title-container {
+  background: rgb(59, 7, 59);
+  padding: 0.5em;
+  margin-bottom: 1em;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px black;
 }
 </style>

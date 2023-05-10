@@ -48,12 +48,27 @@ export default {
       <p class="m-0">{{ userSelected.name }} {{ userSelected.lastname }}</p>
     </div>
     <div class="messages-container">
-      <div v-for="message in messages" :key="message.id">
+      <div
+        v-for="message in messages"
+        :key="message.id"
+        :class="{
+          message_sent: message.sender_id == currentAuthUser.id,
+          complex_message:
+            message.sender_is == currentAuthUser.id &&
+            message.message != null &&
+            message.image != null,
+          message_receive: message.sender_id != currentAuthUser.id,
+        }"
+      >
         <img
           v-if="message.image != null"
           :src="'images/messages/' + message.image"
+          class="chat-image"
         />
-        <p v-if="message.message != null">
+        <p
+          class="mt-2 mb-2 ms-0 me-0 chat-message"
+          v-if="message.message != null"
+        >
           {{ message.message }}
         </p>
       </div>
@@ -90,32 +105,35 @@ export default {
 
 @keyframes changeBorder {
   0% {
-    border-color: #00ff00;
+    border-color: purple;
   }
 
   25% {
-    border-color: #228b22;
+    border-color: rgb(75, 6, 75);
   }
 
   50% {
-    border-color: #66ff00;
+    border-color: rgb(37, 4, 37);
   }
 
   75% {
-    border-color: #adff2f;
+    border-color: rgb(190, 0, 190);
   }
 
   100% {
-    border-color: #00cc99;
+    border-color: rgb(229, 16, 229);
   }
 }
 
-img {
-  width: 1em;
+.chat-image {
+  width: 10em;
+  margin-bottom: 0.5em;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px black;
 }
 
 .messages-container {
-  padding: 1em;
+  padding: 3em;
   overflow-y: scroll;
   height: 22em;
 }
@@ -125,13 +143,56 @@ img {
 }
 
 .messages-container::-webkit-scrollbar-track {
-  background: #ccc;
+  background: #252525;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
 
 .messages-container::-webkit-scrollbar-thumb {
-  background: #252525;
+  background: rgb(37, 4, 37);
   border-radius: 10px;
+}
+
+.message_sent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chat-message {
+  text-align: start;
+}
+
+.complex_message {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  flex-direction: column;
+}
+
+.message_sent :not(.chat-image) {
+  /* display: inline-block; */
+  background-color: rgb(59, 7, 59);
+  box-shadow: 1px 1px 3px black;
+  min-width: 6em;
+  word-wrap: break-word;
+  max-width: 20em;
+  overflow-y: hidden;
+  height: auto;
+  border-radius: 10px;
+  padding: 0.5em;
+}
+
+.message_receive :not(.chat-image) {
+  display: inline-block;
+  background-color: purple;
+  box-shadow: 1px 1px 3px black;
+  min-width: 6em;
+  word-wrap: break-word;
+  max-width: 20em;
+  overflow-y: hidden;
+  height: auto;
+  border-radius: 10px;
+  padding: 0.5em;
 }
 </style>
