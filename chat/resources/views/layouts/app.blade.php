@@ -7,7 +7,6 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
@@ -51,11 +50,16 @@
                             </a>
                             <img src="{{ asset('images/users/'. Auth::user()->image) }}" id="navbarDropdown" alt="Profile Image" class="navbar-profile-image dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <div class="d-flex">
+                                    <label class="form-check-label dropdown-item" for="theme">Light Mode <i class="bi bi-sun"></i></label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="theme" onclick="changeTheme()">
+                                    </div>
+                                </div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
@@ -93,6 +97,21 @@
 
         currentTime();
         setInterval(currentTime, 1000);
+
+        function changeTheme() {
+            const theme = document.querySelector("#theme");
+            const body = document.querySelector("body");
+            const nav = document.querySelector(".navbar");
+            if (theme.checked) {
+                // Attiva il tema chiaro
+                body.classList.add("white-theme");
+                nav.classList.add("new-nav");
+            } else {
+                // Attiva il tema scuro
+                body.classList.remove("white-theme");
+                nav.classList.remove("new-nav");
+            }
+        }
     </script>
 </body>
 
