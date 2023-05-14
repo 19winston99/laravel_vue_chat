@@ -12,8 +12,8 @@ export default {
 
 <template>
   <div class="main-list-container">
-    <div class="title-container">
-      <h5 class="text-center mb-0">Contatti</h5>
+    <div class="title-container d-flex align-items-center justify-content-center">
+      <h5 class="mb-0">Contatti</h5>
     </div>
     <!-- <hr /> -->
     <div class="users-lists-container">
@@ -82,5 +82,6 @@ export default {
   margin-bottom: 1em;
   border-radius: 10px;
   box-shadow: 1px 1px 3px black;
+  height: 3em;
 }
 </style>

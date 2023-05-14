@@ -47,4 +47,8 @@ class User extends Authenticatable
     public function messages() {
         return $this->hasMany('App\Models\Message', 'id');
     }
+
+    public function usersBlocked() {
+        return $this->hasMany('App\Models\UserBlocked', 'id');
+    }
 }

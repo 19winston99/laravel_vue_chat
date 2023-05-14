@@ -1,19 +1,100 @@
 <script>
 export default {
-  props: ["conversations"],
+  props: ["conversations", "currentAuthUser"],
   emits: ["userSelected"],
+  data() {
+    return {
+      usersBlocked: [],
+    };
+  },
   methods: {
     selectUser(user) {
       this.$emit("userSelected", user);
     },
+    getUsersBlocked() {
+      axios
+        .get("api/usersBlocked?currentUser=" + this.currentAuthUser.id)
+        .then((response) => {
+          this.usersBlocked = response.data;
+        });
+    },
+    unlockUser(userBlockedId) {
+      axios.delete("/api/usersBlocked/" + userBlockedId).then((response) => {
+        console.log(response.data.success);
+      });
+    },
+  },
+  mounted() {
+    this.getUsersBlocked();
   },
 };
 </script>
 
 <template>
   <div class="main-conversation-container">
-    <div class="title-container">
+    <div
+      class="title-container d-flex align-items-center justify-content-between pe-5 ps-5"
+    >
       <h5 class="text-center mb-0">Chat</h5>
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-danger rounded-circle text-white"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        <i class="bi bi-person-fill-lock"></i>
+      </button>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-black" id="exampleModalLabel">
+                Utenti Bloccati <i class="bi bi-lock-fill"></i>
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body user-blocked-body">
+              <div
+                class="d-flex align-items-center justify-content-between pe-3 ps-3 user-blocked"
+                v-for="userBlocked in usersBlocked"
+                :key="userBlocked.id"
+              >
+                <div class="d-flex align-items-center gap-2">
+                  <img
+                    :src="'images/users/' + userBlocked.user_blocked.image"
+                    class="img-fluid profile-image"
+                    alt="user_image"
+                  />
+                  <p class="text-black m-0">
+                    {{ userBlocked.user_blocked.name }}
+                    {{ userBlocked.user_blocked.lastname }}
+                  </p>
+                </div>
+                <button
+                  class="btn btn-sm btn-outline-primary rounded-circle"
+                  @click="unlockUser(userBlocked.id)"
+                >
+                  <i class="bi bi-unlock-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- <hr /> -->
     <div class="users-conversations-container">
@@ -86,5 +167,34 @@ export default {
   margin-bottom: 1em;
   border-radius: 10px;
   box-shadow: 1px 1px 3px black;
+}
+
+.user-blocked {
+  border-radius: 10px;
+  padding: 0.3em;
+}
+
+.user-blocked:hover {
+  background: rgba(139, 0, 0, 0.31);
+}
+
+.user-blocked-body {
+  height: 20em;
+  overflow-y: scroll;
+}
+
+.user-blocked-body::-webkit-scrollbar {
+  width: 12px;
+}
+
+.user-blocked-body::-webkit-scrollbar-track {
+  background: #ccc;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.user-blocked-body::-webkit-scrollbar-thumb {
+  background: #252525;
+  border-radius: 10px;
 }
 </style>

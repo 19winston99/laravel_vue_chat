@@ -35,7 +35,7 @@ export default {
 
 <template>
   <div class="d-flex">
-    <users-conversations :conversations="conversations" @userSelected="setUserChat"></users-conversations>
+    <users-conversations :currentAuthUser="userObject" :conversations="conversations" @userSelected="setUserChat"></users-conversations>
     <chat
       v-if="currentUserSelected"
       :currentAuthUser="userObject"

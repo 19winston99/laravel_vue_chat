@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('users', App\Http\Controllers\Api\UserController::class);
 Route::apiResource('messages', App\Http\Controllers\Api\MessageController::class);
 Route::get('conversations', [App\Http\Controllers\Api\UserController::class, 'getConversations']);
+Route::apiResource('usersBlocked', App\Http\Controllers\Api\UsersBlockedController::class);
