@@ -181,6 +181,7 @@ export default {
         class="form-control form-control-sm input-text"
         v-model="messageContent"
         placeholder="Invia un messaggio"
+        @keydown.enter="sendMessage"
       />
     </div>
     <div>

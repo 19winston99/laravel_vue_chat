@@ -1,6 +1,6 @@
 <script>
 export default {
-  props: ["users"],
+  props: ["users", "loading"],
   emits: ["userSelected"],
   methods: {
     selectUser(user) {
@@ -14,9 +14,12 @@ export default {
   <div class="main-list-container">
     <div class="title-container d-flex align-items-center justify-content-center">
       <h5 class="mb-0">Contatti</h5>
+      <div v-if="loading" class="spinner-border text-success ms-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
     <!-- <hr /> -->
-    <div class="users-lists-container">
+    <div class="users-lists-container" v-if="!loading">
       <div v-for="user in users" :key="user.id" @click="selectUser(user)">
         <div class="d-flex ps-5 mb-1 align-items-center gap-1 user-container">
           <img

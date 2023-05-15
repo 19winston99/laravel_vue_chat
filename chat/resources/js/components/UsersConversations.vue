@@ -1,31 +1,16 @@
 <script>
 export default {
-  props: ["conversations", "currentAuthUser"],
+  props: ["conversations", "currentAuthUser", "usersBlocked", "loading"],
   emits: ["userSelected"],
-  data() {
-    return {
-      usersBlocked: [],
-    };
-  },
   methods: {
     selectUser(user) {
       this.$emit("userSelected", user);
-    },
-    getUsersBlocked() {
-      axios
-        .get("api/usersBlocked?currentUser=" + this.currentAuthUser.id)
-        .then((response) => {
-          this.usersBlocked = response.data;
-        });
     },
     unlockUser(userBlockedId) {
       axios.delete("/api/usersBlocked/" + userBlockedId).then((response) => {
         console.log(response.data.success);
       });
     },
-  },
-  mounted() {
-    this.getUsersBlocked();
   },
 };
 </script>
@@ -36,6 +21,9 @@ export default {
       class="title-container d-flex align-items-center justify-content-between pe-5 ps-5"
     >
       <h5 class="text-center mb-0">Chat</h5>
+      <div v-if="loading" class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
       <!-- Button trigger modal -->
       <button
         type="button"
@@ -85,7 +73,7 @@ export default {
                   </p>
                 </div>
                 <button
-                  class="btn btn-sm btn-outline-primary rounded-circle"
+                  class="btn btn-sm btn-outline-dark rounded-circle"
                   @click="unlockUser(userBlocked.id)"
                 >
                   <i class="bi bi-unlock-fill"></i>
@@ -97,7 +85,7 @@ export default {
       </div>
     </div>
     <!-- <hr /> -->
-    <div class="users-conversations-container">
+    <div v-if="!loading" class="users-conversations-container">
       <div
         v-for="user in conversations"
         :key="user.id"

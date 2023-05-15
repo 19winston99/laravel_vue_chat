@@ -1,13 +1,15 @@
 <script>
 export default {
-  props: ["currentAuthUser", "userSelected"],
+  props: ["currentAuthUser", "userSelected", "usersBlocked"],
   data() {
     return {
       messages: [],
+      loadingChat: true,
     };
   },
   methods: {
     getMessages() {
+      this.loadingChat = true;
       axios
         .get(
           "api/messages?currentUser=" +
@@ -17,7 +19,15 @@ export default {
         )
         .then((response) => {
           this.messages = response.data;
+          this.loadingChat = false;
         });
+    },
+    shouldDisplayMessage(message) {
+      const userId = message.sender_id;
+      const isBlocked = this.usersBlocked.some(
+        (blockedUser) => blockedUser.user_blocked.id === userId
+      );
+      return !isBlocked && (message.message != null || message.image != null);
     },
   },
   watch: {
@@ -36,7 +46,14 @@ export default {
 </script>
 
 <template>
-  <div class="main-chat-container">
+  <div
+    v-if="loadingChat"
+    class="spinner-border text-success ms-3 chat-spinner"
+    role="status"
+  >
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div v-if="!loadingChat" class="main-chat-container">
     <div
       class="d-flex justify-content-center align-items-center gap-2 current-chat-user-info"
     >
@@ -45,7 +62,18 @@ export default {
         class="img-fluid profile-image"
         alt="user_image"
       />
-      <p class="m-0">{{ userSelected.name }} {{ userSelected.lastname }}</p>
+      <p
+        v-if="
+          usersBlocked.some((user) => user.user_blocked.id === userSelected.id)
+        "
+        class="m-0"
+      >
+        {{ userSelected.name }}
+        {{ userSelected.lastname }} <i class="bi bi-lock-fill"></i>
+      </p>
+      <p v-else class="m-0">
+        {{ userSelected.name }} {{ userSelected.lastname }}
+      </p>
     </div>
     <div class="messages-container">
       <div
@@ -54,26 +82,29 @@ export default {
         :class="{
           message_sent: message.sender_id == currentAuthUser.id,
           complex_message:
-            message.sender_is == currentAuthUser.id &&
+            message.sender_id == currentAuthUser.id &&
             message.message != null &&
             message.image != null,
           message_receive: message.sender_id != currentAuthUser.id,
         }"
       >
         <img
-          v-if="message.image != null"
+          v-if="message.image != null && shouldDisplayMessage(message)"
           :src="'images/messages/' + message.image"
           class="chat-image"
         />
         <p
           class="mt-2 mb-2 ms-0 me-0 chat-message"
-          v-if="message.message != null"
+          v-if="message.message != null && shouldDisplayMessage(message)"
         >
           {{ message.message }}
         </p>
       </div>
     </div>
     <send-message
+      v-if="
+        !usersBlocked.some((user) => user.user_blocked.id === userSelected.id)
+      "
       :currentAuthUser="currentAuthUser"
       :userSelected="userSelected"
     ></send-message>
@@ -194,5 +225,9 @@ export default {
   height: auto;
   border-radius: 10px;
   padding: 0.5em;
+}
+
+.chat-spinner {
+  margin-top: 12em;
 }
 </style>
