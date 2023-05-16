@@ -1,19 +1,32 @@
 <script>
 export default {
   props: ["conversations", "currentAuthUser", "usersBlocked", "loading"],
-  emits: ["userSelected"],
+  emits: ["userSelected", "userBlocked"],
   methods: {
     selectUser(user) {
       this.$emit("userSelected", user);
     },
-    unlockUser(userBlocked) {
+    isUserBlocked(userId) {
+      return this.usersBlocked.some((user) => user.user_blocked.id === userId);
+    },
+    unlockUser(userBlockedId) {
       axios
-        .delete("/api/usersLocked/" + userBlocked.id)
+        .head("/api/usersLocked/del/?id=" + userBlockedId)
         .then((response) => {
-          console.log(response.data.success);
+          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error.response);
+        });
+    },
+    blockUser(userId) {
+      axios
+        .post("api/usersLocked", {
+          blocking_user_id: this.currentAuthUser.id,
+          blocked_user_id: userId,
+        })
+        .then((response) => {
+          this.$emit("userBlocked");
         });
     },
   },
@@ -79,7 +92,7 @@ export default {
                 </div>
                 <button
                   class="btn btn-sm btn-outline-dark rounded-circle"
-                  @click="unlockUser(userBlocked)"
+                  @click="unlockUser(userBlocked.id)"
                 >
                   <i class="bi bi-unlock-fill"></i>
                 </button>
@@ -96,13 +109,24 @@ export default {
         :key="user.id"
         @click="selectUser(user)"
       >
-        <div class="d-flex ps-5 mb-1 align-items-center gap-1 user-container">
-          <img
-            :src="'images/users/' + user.image"
-            class="img-fluid profile-image"
-            alt="user_image"
-          />
-          <p class="m-0">{{ user.name }} {{ user.lastname }}</p>
+        <div
+          class="d-flex mb-1 align-items-center justify-content-between user-container"
+        >
+          <div class="d-flex ps-5 mb-1 align-items-center gap-1">
+            <img
+              :src="'images/users/' + user.image"
+              class="img-fluid profile-image"
+              alt="user_image"
+            />
+            <p class="m-0">{{ user.name }} {{ user.lastname }}</p>
+          </div>
+          <button
+            v-if="!isUserBlocked(user.id) && user.id != currentAuthUser.id"
+            class="btn btn-sm btn-dark rounded-circle me-3"
+            @click="blockUser(user.id)"
+          >
+            <i class="bi bi-person-fill-lock"></i>
+          </button>
         </div>
       </div>
     </div>

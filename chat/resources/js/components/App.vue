@@ -53,6 +53,7 @@ export default {
       @userSelected="setUserChat"
       :usersBlocked="usersBlocked"
       :loading="loading"
+      @userBlocked="getUsersBlocked"
     ></users-conversations>
     <div
       v-if="!currentUserSelected"
