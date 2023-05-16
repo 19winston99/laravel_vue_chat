@@ -31,7 +31,7 @@ export default {
     },
     getUsersBlocked() {
       axios
-        .get("api/usersBlocked?currentUser=" + this.userObject.id)
+        .get("api/usersLocked?currentUser=" + this.userObject.id)
         .then((response) => {
           this.usersBlocked = response.data;
         });

@@ -6,10 +6,15 @@ export default {
     selectUser(user) {
       this.$emit("userSelected", user);
     },
-    unlockUser(userBlockedId) {
-      axios.delete("/api/usersBlocked/" + userBlockedId).then((response) => {
-        console.log(response.data.success);
-      });
+    unlockUser(userBlocked) {
+      axios
+        .delete("/api/usersLocked/" + userBlocked.id)
+        .then((response) => {
+          console.log(response.data.success);
+        })
+        .catch(function (error) {
+          console.log(error.response);
+        });
     },
   },
 };
@@ -74,7 +79,7 @@ export default {
                 </div>
                 <button
                   class="btn btn-sm btn-outline-dark rounded-circle"
-                  @click="unlockUser(userBlocked.id)"
+                  @click="unlockUser(userBlocked)"
                 >
                   <i class="bi bi-unlock-fill"></i>
                 </button>

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_blockeds', function (Blueprint $table) {
+        Schema::create('user_lockeds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('blocking_user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('blocked_user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');

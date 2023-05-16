@@ -29,6 +29,14 @@ export default {
       );
       return !isBlocked && (message.message != null || message.image != null);
     },
+    deleteMessage(messageId) {
+      axios.delete('api/messages/'+ messageId).then(response => {
+        this.filterArray(messageId)
+      });
+    },
+    filterArray(id) {
+      this.messages = this.messages.filter((el) => el.id !== id);
+    }
   },
   watch: {
     userSelected: {
@@ -88,17 +96,23 @@ export default {
           message_receive: message.sender_id != currentAuthUser.id,
         }"
       >
-        <img
-          v-if="message.image != null && shouldDisplayMessage(message)"
-          :src="'images/messages/' + message.image"
-          class="chat-image"
-        />
-        <p
-          class="mt-2 mb-2 ms-0 me-0 chat-message"
-          v-if="message.message != null && shouldDisplayMessage(message)"
-        >
-          {{ message.message }}
-        </p>
+        <div v-if="message.image != null" class="d-flex align-items-center message-button-container">
+          <img
+            v-if="message.image != null && shouldDisplayMessage(message)"
+            :src="'images/messages/' + message.image"
+            class="chat-image"
+          />
+          <button v-if="!(message.image != null && message.message != null) && message.sender_id == currentAuthUser.id" class="btn btn-sm button" @click="deleteMessage(message.id)"><i class="bi bi-trash-fill trash"></i></button>
+        </div>
+        <div v-if="message.message != null" class="d-flex align-items-center message-button-container">
+          <p
+            class="mt-2 mb-2 ms-0 me-0 chat-message"
+            v-if="message.message != null && shouldDisplayMessage(message)"
+          >
+            {{ message.message }}
+          </p>
+          <button v-if="message.sender_id == currentAuthUser.id" class="btn btn-sm button" @click="deleteMessage(message.id)"><i class="bi bi-trash-fill trash"></i></button>
+        </div>
       </div>
     </div>
     <send-message
@@ -208,7 +222,7 @@ export default {
   min-width: 6em;
   word-wrap: break-word;
   max-width: 20em;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   height: auto;
   border-radius: 10px;
   padding: 0.5em;
@@ -221,7 +235,7 @@ export default {
   min-width: 6em;
   word-wrap: break-word;
   max-width: 20em;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   height: auto;
   border-radius: 10px;
   padding: 0.5em;
@@ -229,5 +243,26 @@ export default {
 
 .chat-spinner {
   margin-top: 12em;
+}
+
+.message-button-container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.button {
+  border: none !important;
+  min-width: 0.5em !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.trash {
+  color: grey;
+}
+
+.trash:hover {
+  color: #ccc;
 }
 </style>
