@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Laravel_Vue_Chat</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -17,9 +17,12 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
 </head>
 
-<body>
+<body @if(Request::route()->getName() === 'login') class="guest-container-login"
+    @elseif(Request::route()->getName() === 'register') class="guest-container-register"
+    @elseif(Request::is('/')) class="guest-container-welcome"
+    @endif>
     <div id="app">
-        <nav class="navbar navbar-expand-md shadow-sm">
+        <nav class="navbar navbar-expand-md shadow-sm guest-container-nav">
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -34,13 +37,13 @@
                         @guest
                         @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link text-white guest-button" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @endif
 
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link text-white guest-button" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                         @endif
                         @else
@@ -50,7 +53,7 @@
                             </a>
                             <img src="{{ asset('images/users/'. Auth::user()->image) }}" id="navbarDropdown" alt="Profile Image" class="navbar-profile-image dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <div class="d-flex">
+                                <div class="d-flex">
                                     <label class="form-check-label dropdown-item" for="theme">Light Mode <i class="bi bi-sun"></i></label>
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" role="switch" id="theme" onclick="changeTheme()">
@@ -70,11 +73,10 @@
                 </div>
             </div>
         </nav>
-        <main class="py-4">
+        <main @if(Request::route()->getName() !== 'register' || Request::route()->getName() !== '/' ) class="py-4" @endif>
             @yield('content')
         </main>
     </div>
-
     <script>
         "use strict";
 

@@ -52,3 +52,61 @@ nav {
         border-color: #00CC99;
     }
 }
+
+.guest-button {
+    border-radius: 50px;
+}
+
+.guest-button:hover {
+    transition: 0.4s ease-in-out;
+    background-color: #ccc;
+    -webkit-text-stroke: 1px #252525; /* Per Safari/Chrome */
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.guest-container-login {
+    background: url('../../public/images/backgrounds/b3.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.guest-container-register {
+    background: url('../../public/images/backgrounds/b4.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.guest-container-nav {
+    backdrop-filter: blur(10px);
+    background-color: transparent;
+}
+
+.guest {
+    background: transparent;
+    backdrop-filter: blur(10px);
+    box-shadow: 1em 1em 1em black;
+}
+
+.guest-container-welcome {
+        background: url('../../public/images/backgrounds/b5.jpg');
+        background-position: center;
+        background-size: cover;
+}
+
+.description-container {
+    backdrop-filter: blur(10px);
+    background-color: transparent;
+    width: 29em;
+    border-radius: 10px;
+    box-shadow: 1em 1em 1em #252525;
+    padding: 1em;
+}
+
+.description-site {
+    color: #252525;
+    margin: 0;
+    text-align: justify;
+}

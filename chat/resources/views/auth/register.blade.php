@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-2">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+            <div class="card guest">
+                <div class="card-header"><i class="bi bi-chat-fill"></i> {{ __('Register') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
@@ -57,8 +57,10 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-                                <button onclick="showPassword()">try</button>
+                                <div class="d-flex">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <button type="button" id="button" class="btn btn-sm border border-0" onclick="showPassword('password', 'button')"><i class="bi bi-eye-fill"></i></button>
+                                </div>
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -71,7 +73,10 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <div class="d-flex">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <button type="button" id="button-confirm" class="btn btn-sm border border-0" onclick="showPassword('password-confirm', 'button-confirm')"><i class="bi bi-eye-fill"></i></button>
+                                </div>
                             </div>
                         </div>
 
@@ -91,8 +96,8 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                <button type="submit" class="btn btn-sm btn-dark">
+                                    {{ __('Register') }} <i class="bi bi-check-lg"></i>
                                 </button>
                             </div>
                         </div>
@@ -103,12 +108,13 @@
     </div>
 </div>
 @endsection
-
-
 <script>
+    'use strict';
 
-    function showPassword() {
-        let password = document.querySelector('#password');
-        password.type = password.type == 'password' ? 'text' : 'password';
+    function showPassword(inputId, buttonId) {
+        let input = document.querySelector('#' + inputId);
+        let button = document.querySelector('#' + buttonId);
+        input.type = input.type === 'password' ? 'text' : 'password';
+        button.innerHTML = button.innerHTML === '<i class="bi bi-eye-fill"></i>' ? '<i class="bi bi-eye-slash-fill"></i>' : '<i class="bi bi-eye-fill"></i>'
     }
 </script>
