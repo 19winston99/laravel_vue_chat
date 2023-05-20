@@ -30,13 +30,13 @@ export default {
       return !isBlocked && (message.message != null || message.image != null);
     },
     deleteMessage(messageId) {
-      axios.delete('api/messages/'+ messageId).then(response => {
-        this.filterArray(messageId)
+      axios.delete("api/messages/" + messageId).then((response) => {
+        this.filterArray(messageId);
       });
     },
     filterArray(id) {
       this.messages = this.messages.filter((el) => el.id !== id);
-    }
+    },
   },
   watch: {
     userSelected: {
@@ -54,13 +54,15 @@ export default {
 </script>
 
 <template>
-  <div
+  <lottie-player
     v-if="loadingChat"
-    class="spinner-border text-success ms-3 chat-spinner"
-    role="status"
-  >
-    <span class="visually-hidden">Loading...</span>
-  </div>
+    src="https://assets2.lottiefiles.com/packages/lf20_0fwvfox8.json"
+    background="transparent"
+    speed="1.5"
+    style="width: 200px; height: 200px"
+    loop
+    autoplay
+  ></lottie-player>
   <div v-if="!loadingChat" class="main-chat-container">
     <div
       class="d-flex justify-content-center align-items-center gap-2 current-chat-user-info"
@@ -96,22 +98,43 @@ export default {
           message_receive: message.sender_id != currentAuthUser.id,
         }"
       >
-        <div v-if="message.image != null" class="d-flex align-items-center message-button-container">
+        <div
+          v-if="message.image != null && shouldDisplayMessage(message)"
+          class="d-flex align-items-center message-button-container"
+        >
           <img
-            v-if="message.image != null && shouldDisplayMessage(message)"
+            v-if="message.image != null"
             :src="'images/messages/' + message.image"
             class="chat-image"
           />
-          <button v-if="!(message.image != null && message.message != null) && message.sender_id == currentAuthUser.id" class="btn btn-sm button" @click="deleteMessage(message.id)"><i class="bi bi-trash-fill trash"></i></button>
+          <button
+            v-if="
+              !(message.image != null && message.message != null) &&
+              message.sender_id == currentAuthUser.id
+            "
+            class="btn btn-sm button"
+            @click="deleteMessage(message.id)"
+          >
+            <i class="bi bi-trash-fill trash"></i>
+          </button>
         </div>
-        <div v-if="message.message != null" class="d-flex align-items-center message-button-container">
+        <div
+          v-if="message.message != null && shouldDisplayMessage(message)"
+          class="d-flex align-items-center message-button-container"
+        >
           <p
-            class="mt-2 mb-2 ms-0 me-0 chat-message"
-            v-if="message.message != null && shouldDisplayMessage(message)"
+            class="mt-1 mb-1 ms-0 me-0 chat-message"
+            v-if="message.message != null"
           >
             {{ message.message }}
           </p>
-          <button v-if="message.sender_id == currentAuthUser.id" class="btn btn-sm button" @click="deleteMessage(message.id)"><i class="bi bi-trash-fill trash"></i></button>
+          <button
+            v-if="message.sender_id == currentAuthUser.id"
+            class="btn btn-sm button"
+            @click="deleteMessage(message.id)"
+          >
+            <i class="bi bi-trash trash"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -140,34 +163,10 @@ export default {
 
 .current-chat-user-info {
   padding: 0.3em;
-  box-shadow: 2px 2px 11px black;
+  backdrop-filter: blur(10px);
   border-radius: 10px;
   width: 20em;
-  margin: 0 auto;
-  border: 2px solid;
-  animation: changeBorder 5s infinite alternate linear;
-}
-
-@keyframes changeBorder {
-  0% {
-    border-color: purple;
-  }
-
-  25% {
-    border-color: rgb(75, 6, 75);
-  }
-
-  50% {
-    border-color: rgb(37, 4, 37);
-  }
-
-  75% {
-    border-color: rgb(190, 0, 190);
-  }
-
-  100% {
-    border-color: rgb(229, 16, 229);
-  }
+  margin: 0 auto 1em;
 }
 
 .chat-image {
@@ -178,6 +177,10 @@ export default {
 }
 
 .messages-container {
+  border-radius: 10px;
+  background: url("../../../public/images/backgrounds/b8.jpg");
+  background-position: center;
+  background-size: cover;
   padding: 3em;
   overflow-y: scroll;
   height: 22em;
@@ -194,7 +197,7 @@ export default {
 }
 
 .messages-container::-webkit-scrollbar-thumb {
-  background: rgb(37, 4, 37);
+  background: #252cc525;
   border-radius: 10px;
 }
 
@@ -206,6 +209,8 @@ export default {
 
 .chat-message {
   text-align: start;
+  background: #252cc525;
+  backdrop-filter: blur(10px);
 }
 
 .complex_message {
@@ -216,13 +221,10 @@ export default {
 }
 
 .message_sent :not(.chat-image) {
-  /* display: inline-block; */
-  background-color: rgb(59, 7, 59);
   box-shadow: 1px 1px 3px black;
   min-width: 6em;
   word-wrap: break-word;
   max-width: 20em;
-  /* overflow-y: hidden; */
   height: auto;
   border-radius: 10px;
   padding: 0.5em;
@@ -230,12 +232,10 @@ export default {
 
 .message_receive :not(.chat-image) {
   display: inline-block;
-  background-color: purple;
   box-shadow: 1px 1px 3px black;
   min-width: 6em;
   word-wrap: break-word;
   max-width: 20em;
-  /* overflow-y: hidden; */
   height: auto;
   border-radius: 10px;
   padding: 0.5em;
@@ -259,7 +259,7 @@ export default {
 }
 
 .trash {
-  color: grey;
+  color: white;
 }
 
 .trash:hover {

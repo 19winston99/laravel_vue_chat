@@ -6,20 +6,9 @@ body {
     background-color: #252525;
 }
 
-.white-theme {
-    transition: 0.6s ease-in-out;
-    color: black;
-    background-color: #ccc;
-}
-
-.new-nav {
-    transition: 0.6s ease-in-out;
-    background-color: rgba(59, 7, 59, 0.811);
-}
-
 nav {
-    transition: 0.6s ease-in-out;
-    background-color: #252525;
+    backdrop-filter: blur(10px);
+    background-color: transparent;
 }
 
 .navbar-profile-image {
@@ -33,25 +22,25 @@ nav {
 
 @keyframes changeBorder {
     0% {
-        border-color: #00FF00;
+      border-color: #003399;
     }
-
+  
     25% {
-        border-color: #228b22;
+      border-color: #3366CC;
     }
-
+  
     50% {
-        border-color: #66FF00;
+      border-color: #000080 ;
     }
-
+  
     75% {
-        border-color: #ADFF2F;
+      border-color: #4682b4;
     }
-
+  
     100% {
-        border-color: #00CC99;
+      border-color: #99CCFF;
     }
-}
+  }
 
 .guest-button {
     border-radius: 50px;
@@ -60,7 +49,8 @@ nav {
 .guest-button:hover {
     transition: 0.4s ease-in-out;
     background-color: #ccc;
-    -webkit-text-stroke: 1px #252525; /* Per Safari/Chrome */
+    -webkit-text-stroke: 1px #252525;
+    /* Per Safari/Chrome */
 }
 
 .forgot-password:hover {
@@ -79,9 +69,10 @@ nav {
     background-size: cover;
 }
 
-.guest-container-nav {
-    backdrop-filter: blur(10px);
-    background-color: transparent;
+.home-container {
+    background: url('../../public/images/backgrounds/b9.jpg');
+    background-position: center;
+    background-size: cover;
 }
 
 .guest {
@@ -91,9 +82,9 @@ nav {
 }
 
 .guest-container-welcome {
-        background: url('../../public/images/backgrounds/b5.jpg');
-        background-position: center;
-        background-size: cover;
+    background: url('../../public/images/backgrounds/b5.jpg');
+    background-position: center;
+    background-size: cover;
 }
 
 .description-container {

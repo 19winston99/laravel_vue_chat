@@ -12,13 +12,22 @@ export default {
 
 <template>
   <div class="main-list-container">
-    <div class="title-container d-flex align-items-center justify-content-center">
+    <div
+      class="title-container d-flex align-items-center justify-content-center"
+    >
       <h5 class="mb-0">Contatti</h5>
-      <div v-if="loading" class="spinner-border text-success ms-3" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
     </div>
     <!-- <hr /> -->
+    <lottie-player
+      v-if="loading"
+      class="m-auto"
+      src="https://assets2.lottiefiles.com/packages/lf20_2jraenvx.json"
+      background="transparent"
+      speed="1"
+      style="width: 150px; height: 150px"
+      loop
+      autoplay
+    ></lottie-player>
     <div class="users-lists-container" v-if="!loading">
       <div v-for="user in users" :key="user.id" @click="selectUser(user)">
         <div class="d-flex ps-5 mb-1 align-items-center gap-1 user-container">
@@ -49,14 +58,15 @@ export default {
 
 .user-container {
   padding: 0.5em;
-  border: 1px solid #312e2e;
-  border-radius: 50px;
+  border-radius: 10px;
+  background: #252cc525;
+  backdrop-filter: blur(5px);
+  margin: 0 1em 0 1em;
 }
 
 .user-container:hover {
   cursor: pointer;
-  background-color: #312e2e;
-  border-radius: 50px;
+  background: #252dc59c;
 }
 
 .users-lists-container {
@@ -75,12 +85,12 @@ export default {
 }
 
 .users-lists-container::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #252cc525;
   border-radius: 10px;
 }
 
 .title-container {
-  background: rgb(59, 7, 59);
+  background: #252cc525;
   padding: 0.5em;
   margin-bottom: 1em;
   border-radius: 10px;

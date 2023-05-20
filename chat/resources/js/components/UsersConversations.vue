@@ -39,17 +39,14 @@ export default {
       class="title-container d-flex align-items-center justify-content-between pe-5 ps-5"
     >
       <h5 class="text-center mb-0">Chat</h5>
-      <div v-if="loading" class="spinner-border text-success" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
       <!-- Button trigger modal -->
       <button
         type="button"
-        class="btn btn-sm btn-outline-danger rounded-circle text-white"
+        class="btn btn-sm btn-outline-light rounded-circle text-white"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
-        <i class="bi bi-person-fill-lock"></i>
+        <i class="bi bi-person-fill-lock icon-block-list"></i>
       </button>
 
       <!-- Modal -->
@@ -103,6 +100,16 @@ export default {
       </div>
     </div>
     <!-- <hr /> -->
+    <lottie-player
+      v-if="loading"
+      class="m-auto"
+      src="https://assets2.lottiefiles.com/packages/lf20_2jraenvx.json"
+      background="transparent"
+      speed="1"
+      style="width: 150px; height: 150px"
+      loop
+      autoplay
+    ></lottie-player>
     <div v-if="!loading" class="users-conversations-container">
       <div
         v-for="user in conversations"
@@ -148,14 +155,15 @@ export default {
 
 .user-container {
   padding: 0.5em;
-  border: 1px solid #312e2e;
-  border-radius: 50px;
+  border-radius: 10px;
+  background: #252cc525;
+  backdrop-filter: blur(5px);
+  margin: 0 1em 0 1em;
 }
 
 .user-container:hover {
   cursor: pointer;
-  background-color: #312e2e;
-  border-radius: 50px;
+  background: #252dc59c;
 }
 
 .users-conversations-container {
@@ -174,12 +182,12 @@ export default {
 }
 
 .users-conversations-container::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #252cc525;
   border-radius: 10px;
 }
 
 .title-container {
-  background: rgb(59, 7, 59);
+  background: #252cc525;
   padding: 0.5em;
   margin-bottom: 1em;
   border-radius: 10px;
@@ -211,7 +219,11 @@ export default {
 }
 
 .user-blocked-body::-webkit-scrollbar-thumb {
-  background: #252525;
+  background: #252cc525;
   border-radius: 10px;
+}
+
+.icon-block-list:hover {
+  color: #252525;
 }
 </style>

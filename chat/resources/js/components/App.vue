@@ -60,8 +60,15 @@ export default {
       class="warning-container d-flex justify-content-center align-items-start"
     >
       <div class="not-user-selected">
-        <i class="bi bi-cone-striped i-size"></i>
-        <p>Seleziona un utente</p>
+        <lottie-player
+          src="https://assets4.lottiefiles.com/packages/lf20_9a9edhvx.json"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          loop
+          autoplay
+        ></lottie-player>
+        <p>Seleziona un utente...</p>
       </div>
     </div>
     <chat
@@ -85,9 +92,6 @@ export default {
 }
 
 .not-user-selected {
-  box-shadow: 1px 1px 5px black;
-  padding: 1em;
-  border-radius: 10px;
   text-align: center;
 }
 

@@ -20,9 +20,10 @@
 <body @if(Request::route()->getName() === 'login') class="guest-container-login"
     @elseif(Request::route()->getName() === 'register') class="guest-container-register"
     @elseif(Request::is('/')) class="guest-container-welcome"
+    @elseif(Request::route()->getName() === 'home') class="home-container"
     @endif>
     <div id="app">
-        <nav class="navbar navbar-expand-md shadow-sm guest-container-nav">
+        <nav class="navbar navbar-expand-md shadow-sm">
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -53,12 +54,6 @@
                             </a>
                             <img src="{{ asset('images/users/'. Auth::user()->image) }}" id="navbarDropdown" alt="Profile Image" class="navbar-profile-image dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <div class="d-flex">
-                                    <label class="form-check-label dropdown-item" for="theme">Light Mode <i class="bi bi-sun"></i></label>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="theme" onclick="changeTheme()">
-                                    </div>
-                                </div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }} <i class="bi bi-door-closed-fill"></i>
@@ -77,6 +72,8 @@
             @yield('content')
         </main>
     </div>
+    @auth
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script>
         "use strict";
 
@@ -99,22 +96,8 @@
 
         currentTime();
         setInterval(currentTime, 1000);
-
-        function changeTheme() {
-            const theme = document.querySelector("#theme");
-            const body = document.querySelector("body");
-            const nav = document.querySelector(".navbar");
-            if (theme.checked) {
-                // Attiva il tema chiaro
-                body.classList.add("white-theme");
-                nav.classList.add("new-nav");
-            } else {
-                // Attiva il tema scuro
-                body.classList.remove("white-theme");
-                nav.classList.remove("new-nav");
-            }
-        }
     </script>
+    @endauth
 </body>
 
 </html>
