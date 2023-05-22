@@ -2,9 +2,19 @@
 export default {
   props: ["users", "loading"],
   emits: ["userSelected"],
+  data() {
+    return {
+      usersContainer: [],
+    };
+  },
   methods: {
     selectUser(user) {
       this.$emit("userSelected", user);
+    },
+    searchUsers(text) {
+      this.usersContainer = this.users.filter((user) =>
+        user.name.toLowerCase().startsWith(text.toLowerCase())
+      );
     },
   },
 };
@@ -15,7 +25,7 @@ export default {
     <div
       class="title-container d-flex align-items-center justify-content-center"
     >
-      <h5 class="mb-0">Contatti</h5>
+      <h5 class="mb-0"><searchbar @search-users="searchUsers"></searchbar></h5>
     </div>
     <!-- <hr /> -->
     <lottie-player
@@ -29,7 +39,11 @@ export default {
       autoplay
     ></lottie-player>
     <div class="users-lists-container" v-if="!loading">
-      <div v-for="user in users" :key="user.id" @click="selectUser(user)">
+      <div
+        v-for="user in usersContainer.length ? usersContainer : users"
+        :key="user.id"
+        @click="selectUser(user)"
+      >
         <div class="d-flex ps-5 mb-1 align-items-center gap-1 user-container">
           <img
             :src="'images/users/' + user.image"

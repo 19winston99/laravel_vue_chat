@@ -77,11 +77,13 @@ export default {
       :userSelected="currentUserSelected"
       :usersBlocked="usersBlocked"
     ></chat>
-    <users-list
-      :users="users"
-      @userSelected="setUserChat"
-      :loading="loading"
-    ></users-list>
+    <div>
+      <users-list
+        :users="users"
+        @userSelected="setUserChat"
+        :loading="loading"
+      ></users-list>
+    </div>
   </div>
 </template>
 

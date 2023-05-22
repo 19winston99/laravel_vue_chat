@@ -6,6 +6,9 @@ export default {
     return {
       messageContent: "",
       image: null,
+      typing: false,
+      typingTimeOut: "",
+      currentTypingUser: null,
       emoticons: [
         "❤",
         "😀",
@@ -138,6 +141,15 @@ export default {
       this.messageContent += emoticon;
       event.stopPropagation();
     },
+    isTyping() {
+      let channel = Echo.private("chat");
+      setTimeout(() => {
+        channel.whisper("typing", {
+          user: this.userSelected.id,
+          typing: true,
+        });
+      }, 300);
+    },
   },
   watch: {
     userSelected: {
@@ -149,6 +161,19 @@ export default {
         }
       },
     },
+  },
+  mounted() {
+    let _this = this;
+
+    Echo.private("chat").listenForWhisper("typing", (e) => {
+        this.currentTypingUser = e.user;
+        this.typing = e.typing;
+        clearTimeout(this.typingTimeOut);
+        this.typingTimeOut = setTimeout(() => {
+          _this.typing = false;
+        }, 900);
+      
+    });
   },
 };
 </script>
@@ -176,12 +201,19 @@ export default {
       </ul>
     </div>
     <div>
+      <span
+        v-if="typing && currentTypingUser == currentAuthUser.id"
+        style="font-style: italic text-white"
+      >
+      Is typing
+      </span>
       <input
         type="text"
         class="form-control form-control-sm input-text"
         v-model="messageContent"
         placeholder="Invia un messaggio"
         @keydown.enter="sendMessage"
+        @input="isTyping"
       />
     </div>
     <div>

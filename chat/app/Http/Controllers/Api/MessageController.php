@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Events\NewMessage;
+use App\Models\User;
 
 class MessageController extends Controller
 {
@@ -53,6 +55,9 @@ class MessageController extends Controller
             'message' => $request->message,
             'image' => $name
         ]);
+
+        $user = User::find($request->recipient_id);
+        event(new NewMessage($message, $user));
 
         return ['success' => 'Messaggio inviato con successo', 'id' => $message->id, 'image' => $name];
     }

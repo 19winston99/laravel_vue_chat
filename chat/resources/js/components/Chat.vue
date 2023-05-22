@@ -49,6 +49,10 @@ export default {
   },
   mounted() {
     this.getMessages();
+    window.Echo.private("chat")
+      .listen("NewMessage", (data) => {
+        this.messages.push(data.message);
+      });
   },
 };
 </script>
