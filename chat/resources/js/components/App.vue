@@ -1,4 +1,6 @@
 <script>
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 export default {
   props: ["auth"],
   data() {
@@ -41,6 +43,17 @@ export default {
     this.getUsers();
     this.getConversations();
     this.getUsersBlocked();
+
+    Echo.join("chat")
+      .here((users) => {
+        //
+      })
+      .joining((user) => {
+        toast.success(user.name + " è online");
+      })
+      .leaving((user) => {
+        toast.dark(user.name + " è offline");
+      });
   },
 };
 </script>
@@ -60,14 +73,7 @@ export default {
       class="warning-container d-flex justify-content-center align-items-start"
     >
       <div class="not-user-selected">
-        <lottie-player
-          src="https://assets4.lottiefiles.com/packages/lf20_9a9edhvx.json"
-          background="transparent"
-          speed="1"
-          style="width: 300px; height: 300px"
-          loop
-          autoplay
-        ></lottie-player>
+        <i class="bi bi-info-circle-fill i-size"></i>
         <p>Seleziona un utente...</p>
       </div>
     </div>
@@ -99,5 +105,6 @@ export default {
 
 .i-size {
   font-size: 3em;
+  color: darkblue;
 }
 </style>

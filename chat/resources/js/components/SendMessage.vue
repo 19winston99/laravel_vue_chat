@@ -1,4 +1,7 @@
 <script>
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 export default {
   props: ["currentAuthUser", "userSelected"],
   emits: ["send-message"],
@@ -109,6 +112,7 @@ export default {
   methods: {
     sendMessage() {
       if (this.messageContent || this.image) {
+        toast.loading("Invio messaggio in corso...");
         const formData = new FormData();
         formData.append("sender_id", this.currentAuthUser.id);
         formData.append("recipient_id", this.userSelected.id);
@@ -130,6 +134,7 @@ export default {
             this.messageContent = "";
             this.image = null;
             this.$refs.inputFile.value = null;
+            toast.remove();
           }
         });
       }
@@ -166,13 +171,12 @@ export default {
     let _this = this;
 
     Echo.private("chat").listenForWhisper("typing", (e) => {
-        this.currentTypingUser = e.user;
-        this.typing = e.typing;
-        clearTimeout(this.typingTimeOut);
-        this.typingTimeOut = setTimeout(() => {
-          _this.typing = false;
-        }, 900);
-      
+      this.currentTypingUser = e.user;
+      this.typing = e.typing;
+      clearTimeout(this.typingTimeOut);
+      this.typingTimeOut = setTimeout(() => {
+        _this.typing = false;
+      }, 900);
     });
   },
 };
@@ -201,12 +205,6 @@ export default {
       </ul>
     </div>
     <div>
-      <span
-        v-if="typing && currentTypingUser == currentAuthUser.id"
-        style="font-style: italic text-white"
-      >
-      Is typing
-      </span>
       <input
         type="text"
         class="form-control form-control-sm input-text"
@@ -245,11 +243,18 @@ export default {
       </button>
     </div>
   </div>
+  <small
+    v-if="typing && currentTypingUser == currentAuthUser.id"
+    style="font-style: italic"
+  >
+  Sta scrivendo...
+  </small>
 </template>
 
 <style>
 .input-text {
   width: 30em;
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 .drop-menu {
@@ -262,13 +267,13 @@ export default {
 }
 
 .drop-menu::-webkit-scrollbar-track {
-  background: #252525;
+  background: #ccc;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
 
 .drop-menu::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #252cc525;
   border-radius: 10px;
 }
 

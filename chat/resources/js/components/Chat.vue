@@ -49,24 +49,21 @@ export default {
   },
   mounted() {
     this.getMessages();
-    window.Echo.private("chat")
-      .listen("NewMessage", (data) => {
-        this.messages.push(data.message);
-      });
+    window.Echo.private("chat").listen("NewMessage", (data) => {
+      this.messages.push(data.message);
+    });
   },
 };
 </script>
 
 <template>
-  <lottie-player
+  <div
     v-if="loadingChat"
-    src="https://assets2.lottiefiles.com/packages/lf20_0fwvfox8.json"
-    background="transparent"
-    speed="1.5"
-    style="width: 200px; height: 200px"
-    loop
-    autoplay
-  ></lottie-player>
+    class="spinner-grow text-primary spinner"
+    role="status"
+  >
+    <span class="visually-hidden">Loading...</span>
+  </div>
   <div v-if="!loadingChat" class="main-chat-container">
     <div
       class="d-flex justify-content-center align-items-center gap-2 current-chat-user-info"
@@ -124,7 +121,7 @@ export default {
         </div>
         <div
           v-if="message.message != null && shouldDisplayMessage(message)"
-          class="d-flex align-items-center message-button-container"
+          class="d-flex align-items-center"
         >
           <p
             class="mt-1 mb-1 ms-0 me-0 chat-message"
@@ -167,10 +164,10 @@ export default {
 
 .current-chat-user-info {
   padding: 0.3em;
-  backdrop-filter: blur(10px);
   border-radius: 10px;
   width: 20em;
   margin: 0 auto 1em;
+  box-shadow: inset 1px 1px 5px #252525;
 }
 
 .chat-image {
@@ -181,11 +178,7 @@ export default {
 }
 
 .messages-container {
-  border-radius: 10px;
-  background: url("../../../public/images/backgrounds/b8.jpg");
-  background-position: center;
-  background-size: cover;
-  padding: 3em;
+  padding: 2em;
   overflow-y: scroll;
   height: 22em;
 }
@@ -195,7 +188,7 @@ export default {
 }
 
 .messages-container::-webkit-scrollbar-track {
-  background: #252525;
+  background: #ccc;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
@@ -214,7 +207,6 @@ export default {
 .chat-message {
   text-align: start;
   background: #252cc525;
-  backdrop-filter: blur(10px);
 }
 
 .complex_message {
@@ -225,7 +217,6 @@ export default {
 }
 
 .message_sent :not(.chat-image) {
-  box-shadow: 1px 1px 3px black;
   min-width: 6em;
   word-wrap: break-word;
   max-width: 20em;
@@ -236,23 +227,12 @@ export default {
 
 .message_receive :not(.chat-image) {
   display: inline-block;
-  box-shadow: 1px 1px 3px black;
   min-width: 6em;
   word-wrap: break-word;
   max-width: 20em;
   height: auto;
   border-radius: 10px;
   padding: 0.5em;
-}
-
-.chat-spinner {
-  margin-top: 12em;
-}
-
-.message-button-container {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
 }
 
 .button {
@@ -262,11 +242,12 @@ export default {
   box-shadow: none !important;
 }
 
-.trash {
-  color: white;
+.trash:hover {
+  border: 1px solid #252525;
 }
 
-.trash:hover {
-  color: #ccc;
+.spinner {
+  width: 5em;
+  height: 5em;
 }
 </style>

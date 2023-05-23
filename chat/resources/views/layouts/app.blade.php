@@ -17,10 +17,8 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
 </head>
 
-<body @if(Request::route()->getName() === 'login') class="guest-container-login"
-    @elseif(Request::route()->getName() === 'register') class="guest-container-register"
+<body @if(Request::route()->getName() === 'login' || Request::route()->getName() === 'register') class="guest-container"
     @elseif(Request::is('/')) class="guest-container-welcome"
-    @elseif(Request::route()->getName() === 'home') class="home-container"
     @endif>
     <div id="app">
         <nav class="navbar navbar-expand-md shadow-sm">
@@ -38,18 +36,18 @@
                         @guest
                         @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link text-white guest-button" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link guest-button" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @endif
 
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link text-white guest-button" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link guest-button" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                         @endif
                         @else
                         <li class="nav-item dropdown d-flex align-items-center justify-content-center">
-                            <a class="nav-link text-white" href="#">
+                            <a class="nav-link" href="#">
                                 {{ Auth::user()->name }} {{ Auth::user()->lastname }}
                             </a>
                             <img src="{{ asset('images/users/'. Auth::user()->image) }}" id="navbarDropdown" alt="Profile Image" class="navbar-profile-image dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

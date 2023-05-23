@@ -25,19 +25,16 @@ export default {
     <div
       class="title-container d-flex align-items-center justify-content-center"
     >
-      <h5 class="mb-0"><searchbar @search-users="searchUsers"></searchbar></h5>
+      <searchbar @search-users="searchUsers"></searchbar>
     </div>
-    <!-- <hr /> -->
-    <lottie-player
-      v-if="loading"
-      class="m-auto"
-      src="https://assets2.lottiefiles.com/packages/lf20_2jraenvx.json"
-      background="transparent"
-      speed="1"
-      style="width: 150px; height: 150px"
-      loop
-      autoplay
-    ></lottie-player>
+    <div v-if="loading" class="d-flex justify-content-center">
+      <div
+        class="spinner-border text-primary spinner"
+        role="status"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <div class="users-lists-container" v-if="!loading">
       <div
         v-for="user in usersContainer.length ? usersContainer : users"
@@ -93,7 +90,7 @@ export default {
 }
 
 .users-lists-container::-webkit-scrollbar-track {
-  background: #252525;
+  background: #ccc;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
@@ -110,5 +107,10 @@ export default {
   border-radius: 10px;
   box-shadow: 1px 1px 3px black;
   height: 3em;
+}
+
+.spinner {
+  width: 5em;
+  height: 5em;
 }
 </style>

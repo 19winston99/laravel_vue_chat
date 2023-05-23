@@ -1,4 +1,7 @@
 <script>
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 export default {
   props: ["conversations", "currentAuthUser", "usersBlocked", "loading"],
   emits: ["userSelected", "userBlocked"],
@@ -26,6 +29,7 @@ export default {
           blocked_user_id: userId,
         })
         .then((response) => {
+          toast.error('Utente bloccato.');
           this.$emit("userBlocked");
         });
     },
@@ -42,7 +46,7 @@ export default {
       <!-- Button trigger modal -->
       <button
         type="button"
-        class="btn btn-sm btn-outline-light rounded-circle text-white"
+        class="btn btn-sm btn-dark rounded-circle"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
@@ -99,17 +103,14 @@ export default {
         </div>
       </div>
     </div>
-    <!-- <hr /> -->
-    <lottie-player
-      v-if="loading"
-      class="m-auto"
-      src="https://assets2.lottiefiles.com/packages/lf20_2jraenvx.json"
-      background="transparent"
-      speed="1"
-      style="width: 150px; height: 150px"
-      loop
-      autoplay
-    ></lottie-player>
+    <div v-if="loading" class="d-flex justify-content-center">
+      <div
+        class="spinner-border text-primary spinner"
+        role="status"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <div v-if="!loading" class="users-conversations-container">
       <div
         v-for="user in conversations"
@@ -129,7 +130,7 @@ export default {
           </div>
           <button
             v-if="!isUserBlocked(user.id) && user.id != currentAuthUser.id"
-            class="btn btn-sm btn-dark rounded-circle me-3"
+            class="btn btn-sm btn-light rounded-circle me-3"
             @click="blockUser(user.id)"
           >
             <i class="bi bi-person-fill-lock"></i>
@@ -176,7 +177,7 @@ export default {
 }
 
 .users-conversations-container::-webkit-scrollbar-track {
-  background: #252525;
+  background: #ccc;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
@@ -200,7 +201,8 @@ export default {
 }
 
 .user-blocked:hover {
-  background: rgba(139, 0, 0, 0.31);
+  cursor: pointer;
+  background: #252cc525;
 }
 
 .user-blocked-body {
@@ -223,7 +225,8 @@ export default {
   border-radius: 10px;
 }
 
-.icon-block-list:hover {
-  color: #252525;
+.spinner {
+  width: 5em;
+  height: 5em;
 }
 </style>

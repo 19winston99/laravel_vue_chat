@@ -20,7 +20,7 @@ export default {
     v-model="text"
     class="form-control searchbar"
     @input="searchUsers"
-    placeholder="Search users"
+    placeholder="Search users..."
   />
 </template>
 

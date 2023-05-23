@@ -7,7 +7,7 @@ $page = "login";
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card text-black guest">
-                <div class="card-header text-white"><i class="bi bi-chat-fill"></i> {{ __('Login') }}</div>
+                <div class="card-header"><i class="bi bi-chat-fill"></i> {{ __('Login') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -62,7 +62,7 @@ $page = "login";
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                <a class="btn forgot-password text-white" href="{{ route('password.request') }}">
+                                <a class="btn forgot-password" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                                 @endif

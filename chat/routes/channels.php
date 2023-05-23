@@ -24,6 +24,6 @@ Broadcast::channel('chat', function ($message) {
 });
 
 Broadcast::channel('chat', function ($user) {
-    return Auth::check();
+    return $user;
   });
   
