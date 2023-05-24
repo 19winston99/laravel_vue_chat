@@ -52,15 +52,10 @@ nav {
     text-decoration: underline;
 }
 
-.guest-container {
+.guest {
     background: url('../../public/images/backgrounds/bg-white.jpg');
     background-position: center;
     background-size: cover;
-}
-
-.guest {
-    background: transparent;
-    backdrop-filter: blur(10px);
     box-shadow: 1em 1em 1em black;
 }
 

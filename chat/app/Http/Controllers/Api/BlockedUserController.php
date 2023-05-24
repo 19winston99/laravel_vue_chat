@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserLocked;
+use App\Models\BlockedUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
-class UserLockedController extends Controller
+class BlockedUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class UserLockedController extends Controller
     public function index(Request $request)
     {
         $current_user = User::find($request->currentUser);
-        $usersBlocked = UserLocked::where('blocking_user_id', $current_user->id)->get();
+        $usersBlocked = BlockedUser::where('blocking_user_id', $current_user->id)->get();
         $users_blocked_container = [];
 
         foreach ($usersBlocked as $userBlocked) {
@@ -46,7 +46,7 @@ class UserLockedController extends Controller
             'blocked_user_id' => 'required'
         ]);
 
-        UserLocked::create([
+        BlockedUser::create([
             'blocking_user_id' => $request->blocking_user_id,
             'blocked_user_id' => $request->blocked_user_id
         ]);
@@ -57,10 +57,10 @@ class UserLockedController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\UserLocked  $userLocked
+     * @param  \App\Models\BlockedUser  $blockedUser
      * @return \Illuminate\Http\Response
      */
-    public function show(UserLocked $userLocked)
+    public function show(BlockedUser $blockedUser)
     {
         //
     }
@@ -69,10 +69,10 @@ class UserLockedController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserLocked  $userLocked
+     * @param  \App\Models\BlockedUser  $blockedUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserLocked $userLocked)
+    public function update(Request $request, BlockedUser $blockedUser)
     {
         //
     }
@@ -80,22 +80,13 @@ class UserLockedController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserLocked  $userLocked
+     * @param  \App\Models\BlockedUser  $blockedUser
      * @return \Illuminate\Http\Response
      */
-    // public function destroy(UserLocked $userLocked, Request $request)
-    // {
-
-    //     $a = UserLocked::find($userLocked->id)->delete();
-    //     // $user = UserLocked::findOrFail($userLocked->id);
-    //     // $user->delete();
-
-    //     return ['success' =>  $request->id];
-    // }
-
-    public function delete(Request $request)
+    public function destroy(BlockedUser $blockedUser)
     {
-        $user = UserLocked::find($request->id);
+
+        $user = BlockedUser::find($blockedUser->id);
         $user->delete();
 
         return ['success' =>  'Utente sbloccato con successo'];

@@ -6,7 +6,7 @@ $page = "login";
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card text-black guest">
+            <div class="card guest">
                 <div class="card-header"><i class="bi bi-chat-fill"></i> {{ __('Login') }}</div>
 
                 <div class="card-body">

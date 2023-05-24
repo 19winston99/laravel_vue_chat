@@ -21,5 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('users', App\Http\Controllers\Api\UserController::class);
 Route::apiResource('messages', App\Http\Controllers\Api\MessageController::class);
 Route::get('conversations', [App\Http\Controllers\Api\UserController::class, 'getConversations']);
-Route::apiResource('usersLocked', App\Http\Controllers\Api\UserLockedController::class);
-Route::any('usersLocked/del/{userBlockedId}', [App\Http\Controllers\Api\UserLockedController::class, 'delete']);
+Route::apiResource('blockedUsers', App\Http\Controllers\Api\BlockedUserController::class);

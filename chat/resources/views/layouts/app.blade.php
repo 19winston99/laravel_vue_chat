@@ -17,9 +17,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css'])
 </head>
 
-<body @if(Request::route()->getName() === 'login' || Request::route()->getName() === 'register') class="guest-container"
-    @elseif(Request::is('/')) class="guest-container-welcome"
-    @endif>
+<body @if(Request::is('/')) class="guest-container-welcome" @endif>
     <div id="app">
         <nav class="navbar navbar-expand-md shadow-sm">
             <div class="container">
@@ -71,7 +69,6 @@
         </main>
     </div>
     @auth
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script>
         "use strict";
 

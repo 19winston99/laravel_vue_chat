@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex justify-content-between ms-5 me-5">
+<div class="d-flex justify-content-between ms-5 me-5 flex-wrap">
     <div class="description-container ms-5">
         <p class="description-site">
             Benvenuti nel mondo emozionante della comunicazione in tempo reale! Il nostro sito offre un'esperienza unica, grazie alla potente combinazione di Laravel, Vue.js e Pusher.

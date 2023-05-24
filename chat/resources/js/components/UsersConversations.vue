@@ -4,7 +4,7 @@ import "vue3-toastify/dist/index.css";
 
 export default {
   props: ["conversations", "currentAuthUser", "usersBlocked", "loading"],
-  emits: ["userSelected", "userBlocked"],
+  emits: ["userSelected", "userBlocked", "unlockUser"],
   methods: {
     selectUser(user) {
       this.$emit("userSelected", user);
@@ -14,17 +14,18 @@ export default {
     },
     unlockUser(userBlockedId) {
       axios
-        .head("/api/usersLocked/del/?id=" + userBlockedId)
+        .delete("/api/blockedUsers/" + userBlockedId)
         .then((response) => {
-          console.log(response.data);
+          toast.info('Utente sbloccato');
+          this.$emit("unlockUser");
         })
         .catch(function (error) {
-          console.log(error.response);
+          toast.error(error.response);
         });
     },
     blockUser(userId) {
       axios
-        .post("api/usersLocked", {
+        .post("api/blockedUsers", {
           blocking_user_id: this.currentAuthUser.id,
           blocked_user_id: userId,
         })

@@ -33,7 +33,7 @@ export default {
     },
     getUsersBlocked() {
       axios
-        .get("api/usersLocked?currentUser=" + this.userObject.id)
+        .get("api/blockedUsers?currentUser=" + this.userObject.id)
         .then((response) => {
           this.usersBlocked = response.data;
         });
@@ -67,6 +67,7 @@ export default {
       :usersBlocked="usersBlocked"
       :loading="loading"
       @userBlocked="getUsersBlocked"
+      @unlockUser="getUsersBlocked"
     ></users-conversations>
     <div
       v-if="!currentUserSelected"

@@ -110,13 +110,12 @@ export default {
           />
           <button
             v-if="
-              !(message.image != null && message.message != null) &&
-              message.sender_id == currentAuthUser.id
+              message.image != null && message.sender_id == currentAuthUser.id
             "
             class="btn btn-sm button"
             @click="deleteMessage(message.id)"
           >
-            <i class="bi bi-trash-fill trash"></i>
+            <i class="bi bi-trash trash"></i>
           </button>
         </div>
         <div
