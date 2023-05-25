@@ -113,4 +113,11 @@ export default {
   width: 5em;
   height: 5em;
 }
+
+@media screen and (max-width: 1000px) {
+  .main-list-container {
+    width: auto;
+    height: auto;
+  }
+}
 </style>

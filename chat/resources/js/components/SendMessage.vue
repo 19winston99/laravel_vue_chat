@@ -183,7 +183,7 @@ export default {
 </script>
 
 <template>
-  <div class="d-flex align-items-end justify-content-center gap-2 mt-2">
+  <div class="d-flex justify-content-center gap-2 mt-2">
     <div class="btn-group">
       <button
         class="btn btn-primary rounded-2 btn-sm dropdown-toggle"
@@ -247,7 +247,7 @@ export default {
     v-if="typing && currentTypingUser == currentAuthUser.id"
     style="font-style: italic"
   >
-  Sta scrivendo...
+    Sta scrivendo...
   </small>
 </template>
 
@@ -284,5 +284,12 @@ export default {
 .drop-item {
   outline: none;
   user-select: none;
+}
+
+@media screen and (max-width: 500px) {
+  .input-text {
+    width: 14em;
+    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
+  }
 }
 </style>

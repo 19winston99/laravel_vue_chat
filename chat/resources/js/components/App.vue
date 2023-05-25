@@ -59,7 +59,7 @@ export default {
 </script>
 
 <template>
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between main">
     <users-conversations
       :currentAuthUser="userObject"
       :conversations="conversations"
@@ -107,5 +107,16 @@ export default {
 .i-size {
   font-size: 3em;
   color: darkblue;
+}
+
+@media screen and (max-width: 1000px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .warning-container {
+    width: auto;
+    height: auto;
+  }
 }
 </style>

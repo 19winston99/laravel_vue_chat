@@ -16,7 +16,7 @@ export default {
       axios
         .delete("/api/blockedUsers/" + userBlockedId)
         .then((response) => {
-          toast.info('Utente sbloccato');
+          toast.info("Utente sbloccato");
           this.$emit("unlockUser");
         })
         .catch(function (error) {
@@ -30,7 +30,7 @@ export default {
           blocked_user_id: userId,
         })
         .then((response) => {
-          toast.error('Utente bloccato.');
+          toast.error("Utente bloccato.");
           this.$emit("userBlocked");
         });
     },
@@ -105,10 +105,7 @@ export default {
       </div>
     </div>
     <div v-if="loading" class="d-flex justify-content-center">
-      <div
-        class="spinner-border text-primary spinner"
-        role="status"
-      >
+      <div class="spinner-border text-primary spinner" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
@@ -229,5 +226,12 @@ export default {
 .spinner {
   width: 5em;
   height: 5em;
+}
+
+@media screen and (max-width: 1000px) {
+  .main-conversation-container {
+    width: auto;
+    height: auto;
+  }
 }
 </style>

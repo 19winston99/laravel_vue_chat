@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex justify-content-between ms-5 me-5 flex-wrap">
-    <div class="description-container ms-5">
+<div class="d-flex justify-content-center gap-5 flex-wrap">
+    <div class="description-container me-2 ms-2">
         <p class="description-site">
             Benvenuti nel mondo emozionante della comunicazione in tempo reale! Il nostro sito offre un'esperienza unica, grazie alla potente combinazione di Laravel, Vue.js e Pusher.
 
@@ -14,9 +14,9 @@
         </p>
         <a href="{{ route('login') }}" class="btn btn-sm btn-outline-primary mt-1">Get Started <i class="bi bi-arrow-right-circle"></i></a>
     </div>
-    <div>
-        <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_ulCIAu4oF3.json" background="transparent" speed="1" style="width: 450px; height: 450px;" loop autoplay></lottie-player>
+    <div class="d-flex flex-column gap-5">
+        <img src="{{ asset('images/contents/chat-3.png')}}" class="welcome-image" alt="chat-image">
+        <img src="{{ asset('images/contents/chat-2.png')}}" class="welcome-image" alt="chat-image">
     </div>
 </div>
 @endsection
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>

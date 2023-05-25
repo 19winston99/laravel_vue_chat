@@ -21,10 +21,13 @@
     <div id="app">
         <nav class="navbar navbar-expand-md shadow-sm">
             <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @auth
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav me-auto time-container">
                         <h4 id="current-time" class="m-0"></h4>
                     </ul>
                     @endauth
@@ -44,7 +47,7 @@
                         </li>
                         @endif
                         @else
-                        <li class="nav-item dropdown d-flex align-items-center justify-content-center">
+                        <li class="nav-item dropdown d-flex">
                             <a class="nav-link" href="#">
                                 {{ Auth::user()->name }} {{ Auth::user()->lastname }}
                             </a>

@@ -79,3 +79,16 @@ nav {
     margin: 0;
     text-align: justify;
 }
+
+.welcome-image {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 450px) {
+    .time-container {
+        margin-top: 1em;
+    }
+}
