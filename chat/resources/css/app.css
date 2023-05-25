@@ -85,6 +85,12 @@ nav {
     width: 10em;
     height: 10em;
     object-fit: cover;
+    animation: flip 2s infinite;
+    animation-delay: calc(0.2s * var(--x));
+}
+
+@keyframes flip {
+    0%, 80% {transform: rotateY(360deg);}
 }
 
 @media screen and (max-width: 450px) {
